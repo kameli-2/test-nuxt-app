@@ -53,11 +53,6 @@ on:
   # Allows running this workflow manually from the Actions tab
   workflow_dispatch:
 
-env:
-  PROJECT_ID: ${{ vars.GCP_PROJECT_ID }} # TODO: update Google Cloud project id
-  SERVICE: ${{ vars.SERVICE_NAME }} # TODO: update Cloud Run service name
-  REGION: ${{ vars.SERVICE_REGION }} # TODO: update Cloud Run service region
-
 jobs:
   deploy:
     name: Deploying to Google Cloud Run
@@ -82,8 +77,8 @@ jobs:
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v0
         with:
-          service: ${{ env.SERVICE }}
-          region: ${{ env.REGION }}
+          service: ${{ vars.SERVICE_NAME }}
+          region: ${{ vars.SERVICE_REGION }}
           # NOTE: If required, update to the appropriate source folder
           source: ./
 
