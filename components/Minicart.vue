@@ -1,12 +1,15 @@
 <script setup lang="ts">
-const cart = getCart();
+import { useCartStore } from '~/composables/cart';
+
+const { cart, miniCartElement } = storeToRefs(useCartStore());
+const { removeFromCart } = useCartStore();
 </script>
 
 <template>
-  <div class="minicart">
+  <div class="minicart" ref="miniCartElement">
     <h3>Cart</h3>
     <ul>
-      <li v-for="cartItem in cart">
+      <li v-for="cartItem in cart" :key="cartItem.productId">
         <span class="cart-item-quantity">{{ cartItem.quantity }} &times;</span>
         <span class="cart-item-name">
           <NuxtLink :to="cartItem.productUrl">

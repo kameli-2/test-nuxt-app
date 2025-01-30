@@ -10,13 +10,9 @@ export function initCart(): CartItem[] {
   return [];
 }
 
-const useCartStore = defineStore('cart', {
-  state: () => ({ cart: initCart() }),
+export const useCartStore = defineStore('cart', {
+  state: () => ({ cart: initCart(), miniCartElement: null as HTMLElement | null }),
   
-  getters: {
-    cartItems: (state) => state.cart,
-  },
-
   actions: {
     addToCart(product: Product) {
       const existingCartItem = this.cart.find(cartItem => cartItem.productId === product.id);
@@ -41,7 +37,3 @@ const useCartStore = defineStore('cart', {
     }
   }
 });
-
-export const getCart = () => useCartStore().cartItems;
-export const addToCart = (product: Product) => useCartStore().addToCart(product);
-export const removeFromCart = (id: number) => useCartStore().removeFromCart(id);

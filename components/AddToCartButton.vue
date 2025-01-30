@@ -1,9 +1,16 @@
 <script setup lang="ts">
+import { useCartStore } from '~/composables/cart';
+
+const { addToCart } = useCartStore();
+const { miniCartElement } = storeToRefs(useCartStore());
+
 function addToCartHandler(product: Product) {
-  console.log('gonna dd to cart');
-  const minicart = document.querySelector('.minicart') as HTMLElement;
-  if (minicart) minicart.style.display = 'block';
-  setTimeout(() => minicart.style.display = '', 2000);
+  if (miniCartElement.value) {
+    miniCartElement.value.style.display = 'block';
+    setTimeout(() => {
+      if (miniCartElement.value) miniCartElement.value.style.display = '';
+    }, 2000);
+  }
   addToCart(product);
 }
 
