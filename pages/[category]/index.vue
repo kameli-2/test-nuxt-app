@@ -15,17 +15,8 @@ const products = await getProducts(parseInt(id));
   <div>
     <h2>Category: {{ category.name }}</h2>
     <ul>
-      <li v-for="product in products">
-        <NuxtImg :src="product.images[0]" width="320" />
-        <NuxtLink :to="`/${category.id}/${product.id}`">{{ product.title }}</NuxtLink>
-        <div class="content">
-          <span>
-            {{ product.price }}&nbsp;&euro;
-          </span>
-          <span>
-            <AddToCartButton :product="product" />
-          </span>
-        </div>
+      <li v-for="product in products" :key="product.id">
+        <ProductListItem :product="product" />
       </li>
     </ul>
   </div>
@@ -44,20 +35,5 @@ li {
   border-radius: 1rem;
   box-shadow: 1px 1px 5px #102;
   overflow: hidden;
-}
-
-li img {
-  width: 100%;
-}
-
-li a {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-}
-
-li .content {
-  padding: 0.5rem 1rem;
-  display: flex;
-  justify-content: space-between;
 }
 </style>

@@ -6,10 +6,8 @@ const categories = await getCategories();
   <div>
     <h2>Categories</h2>
     <ul>
-      <li v-for="category in categories">
-        <NuxtLink :to="`/${category.id}`">
-          {{ category.name }}
-        </NuxtLink>
+      <li v-for="category in categories" :key="category.id">
+        <CategoryListItem :id="String(category.id)" :name="category.name" />
       </li>
     </ul>
   </div>
@@ -22,21 +20,5 @@ ul {
   display: grid;
   grid-template-columns: auto auto auto auto auto;
   gap: 1rem;
-}
-
-li a {
-  border-radius: 1rem;
-  box-shadow: 1px 1px 5px #102;
-  padding: 1rem;
-  width: calc(100% - 2rem);
-  display: inline-block;
-  color: inherit;
-  text-align: center;
-  text-decoration: none;
-  text-transform: capitalize;
-}
-
-li a:hover {
-  background-color: #efd;
 }
 </style>
