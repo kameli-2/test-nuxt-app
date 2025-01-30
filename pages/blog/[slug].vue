@@ -1,17 +1,19 @@
 <script setup lang="ts">
+import type { BlogPost } from "~/lib/contentful/generated/blog_post";
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 const route = useRoute();
 const { slug } = route.params;
-const post = getPost(slug as string);
 
-if (!post) throw createError({ statusCode: 404, statusMessage: 'Blog post not found.' });
+const { data } = await useFetch(`/api/blogPost?slug=${slug}`) as unknown as { data: { post: BlogPost } };
+if (!data) throw createError({ statusCode: 404, statusMessage: 'Blog post not found.' });
 </script>
 
 <template>
   <div>
-    <h2>{{ post.title }}</h2>
-    <small>{{ post.date.toLocaleDateString() }} by {{ post.author }}</small>
-    <p class="ingress">{{ post.ingress }}</p>
-    <div v-html="post.body"></div>
+    <h2>{{ data.post.title }}</h2>
+    <small>{{ new Date(data.post.date).toLocaleDateString() }} by {{ data.post.author }}</small>
+    <p class="ingress">{{ data.post.ingress }}</p>
+    <div v-html="documentToHtmlString(data.post.body)"></div>
   </div>
 </template>
 
